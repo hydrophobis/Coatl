@@ -4,73 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberSec Write-Ups</title>
-    <!-- Link to your CSS file for styling -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
-    <h1>Cybersecurity Write-Ups</h1>
-    <p>Share your cybersecurity insights and write-ups</p>
-</header>
-
 <main>
     <section id="writeup-form">
-        <h2>Submit a Write-Up</h2>
-        <form action="submit.php" method="post">
-            <label for="title">Title:</label><br>
-            <input type="text" id="title" name="title" required><br><br>
-
-            <label for="author">Author:</label><br>
-            <input type="text" id="author" name="author" required><br><br>
-
-            <label for="content">Write-Up:</label><br>
-            <textarea id="content" name="content" rows="6" required></textarea><br><br>
-
-            <input type="submit" value="Submit">
-        </form>
     </section>
 
     <section id="writeups-list">
         <h2>Latest Write-Ups</h2>
-        <!-- Display submitted write-ups here -->
-        <div class="writeup">
-            <?php
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "cybersecurity_writeups";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT title, author, content FROM writeups ORDER BY submission_date DESC";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  // output data of each row
-  while($row = $result->fetch_assoc()) {
-    echo "<div class='writeup'><h3>". $row["title"]. "</h3><p><strong>Author:</strong> ". $row["author"]. "</p><p>" . $row["content"] . "</p></div>";
-  }
-} else {
-  echo "0 results";
-}
-$conn->close();
-?>
-
+        <div id="writeups-container">
         </div>
-        <!-- Repeat this structure for each submitted write-up -->
     </section>
 </main>
 
 <footer>
     <p>&copy; 2024 Cybersecurity Write-Ups</p>
 </footer>
+
+<script>
+    fetch('https://raw.githubusercontent.com/yourusername/yourrepository/main/writeups.json')
+        .then(response => response.json())
+        .then(data => {
+            const writeupsContainer = document.getElementById('writeups-container');
+            writeupsContainer.innerHTML = '';
+            data.forEach(writeup => {
+                const writeupDiv = document.createElement('div');
+                writeupDiv.classList.add('writeup');
+                writeupDiv.innerHTML = `
+                    <h3>${writeup.title}</h3>
+                    <p><strong>Author:</strong> ${writeup.author}</p>
+                    <p>${writeup.content}</p>
+                `;
+                writeupsContainer.appendChild(writeupDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching write-ups:', error));
+</script>
 
 </body>
 </html>
