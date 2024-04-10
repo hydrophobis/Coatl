@@ -1,8 +1,8 @@
 <?php
 // GitHub repository details
-$username = 'yourusername';
-$repository = 'yourrepository';
-$token = 'your_personal_access_token';
+$username = 'CamoGekko';
+$repository = 'Coatl';
+$token = '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';
 
 // Form data
 $title = $_POST['title'];
