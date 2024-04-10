@@ -1,4 +1,4 @@
-# **Coatl**
+# # **Coatl**
 Multiple different simulated malware files for testing your friends, employees or colleagues cyber security skill. 
 
 # HCoatl.bat
@@ -40,7 +40,6 @@ The medium difficulty, Simulation Hitchhiker Coatl is better at its job and also
 
 # RHCoatl.bat
 An actual test for your network, Real Hitchhiker Coatl is much closer to an actual virus without causing any damage, might even stump newer cybersec experts.
-Sure, let's break down these steps into smaller, more detailed actions:
 
 1. **Finding SMB Shared Folder Name**:
    - Uses the `net share` command to retrieve information about shared folders on the network.
