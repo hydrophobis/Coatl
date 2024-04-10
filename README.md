@@ -1,4 +1,4 @@
-# # **Coatl**
+## *Coatl*
 Multiple different simulated malware files for testing your friends, employees or colleagues cyber security skill. 
 
 # HCoatl.bat
