@@ -35,9 +35,34 @@
         <h2>Latest Write-Ups</h2>
         <!-- Display submitted write-ups here -->
         <div class="writeup">
-            <h3>Sample Write-Up Title</h3>
-            <p><strong>Author:</strong> John Doe</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non diam felis.</p>
+            <?php
+$servername = "localhost";
+$username = "your_username";
+$password = "your_password";
+$dbname = "cybersecurity_writeups";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT title, author, content FROM writeups ORDER BY submission_date DESC";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    echo "<div class='writeup'><h3>". $row["title"]. "</h3><p><strong>Author:</strong> ". $row["author"]. "</p><p>" . $row["content"] . "</p></div>";
+  }
+} else {
+  echo "0 results";
+}
+$conn->close();
+?>
+
         </div>
         <!-- Repeat this structure for each submitted write-up -->
     </section>
