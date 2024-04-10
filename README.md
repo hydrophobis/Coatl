@@ -1,5 +1,5 @@
-# Coatl Scripts
-Multiple different simulated malware files for testing your friends, employees or colleagues cyber security skill. 
+# Coatl Scripts        
+*Multiple different simulated malware files for testing your friends, employees or colleagues cyber security skill. Currently offers 3 un-harmful viruses(except for changing firewall settings). They vary in terms of how hard they are to detect and remove. What each of them do is listed below*
 
 # HCoatl.bat
 The most obvious one of the bunch, Hitchhiker Coatl is just scare-ware(and very bad scare-ware at that), will pretty much only work on the people worst at cyber security.
