@@ -37,3 +37,53 @@ The medium difficulty, Simulation Hitchhiker Coatl is better at its job and also
 13. Coatl copies itself to any accessible SMB shared folders on the local network.
 14. The script prints a message indicating that it has finished transferring itself to other devices on the network.
 15. Coatl creates a batch file named `StartupConfig.bat` in the Startup folder, providing additional information about the compromise.
+
+**RHCoatl.bat**
+An actual test for your network, Real Hitchhiker Coatl is much closer to an actual virus without causing any damage, might even stump newer cybersec experts.
+Sure, let's break down these steps into smaller, more detailed actions:
+
+1. **Finding SMB Shared Folder Name**:
+   - Uses the `net share` command to retrieve information about shared folders on the network.
+   - Parses the output to extract the name of the SMB shared folder.
+   - Stores the shared folder name for later use.
+
+2. **Checking SMB Shared Folder Existence**:
+   - Verifies if the SMB shared folder exists on the network.
+   - If the folder does not exist, the script terminates further execution.
+
+3. **Copying `hcoatl.bat` to Network Computers**:
+   - Copies the script file `hcoatl.bat` to the shared folder on every computer in the network.
+   - Ensures that the script is accessible on each machine for execution.
+
+4. **Executing `hcoatl.bat` on Network Computers**:
+   - Utilizes PsExec, a command-line utility, to run `hcoatl.bat` remotely on each computer in the network.
+   - Initiates the execution of the script across all network machines.
+
+5. **Checking Administrative Privileges**:
+   - Determines whether the script is running with administrative privileges.
+   - If not, attempts to elevate its privileges to ensure successful execution of administrative commands.
+
+6. **Adding Outbound FTP Rule**:
+   - Uses the `netsh` command to add a new outbound rule to the Windows Firewall.
+   - Configures the rule to allow FTP traffic (TCP protocol) on port 21 for outbound connections.
+
+7. **Adding Outbound HTTPS Denial Rule**:
+   - Implements another `netsh` command to add an outbound rule to the Windows Firewall.
+   - Specifies the rule to deny inbound HTTPS traffic (TCP protocol) on port 80, restricting web traffic.
+
+8. **Moving Script to Downloads Folder**:
+   - Retrieves the path of the user's Downloads folder from the Windows registry.
+   - Moves the script file (`shcoatl.bat`) to the Downloads folder for persistence and execution on system startup.
+
+9. **Creating `StartupConfig.bat` in Startup Folder**:
+   - Generates a batch script named `StartupConfig.bat` in the user's Startup folder.
+   - Configures this script to execute on system startup to enforce network security settings.
+
+10. **Generating FTP Script File (`FTP.txt`)**:
+    - Creates a text file named `FTP.txt` to facilitate FTP file transfers.
+    - Populates the file with commands for anonymous FTP login and file upload (`put` command).
+
+11. **Creating LAN IP Getter Batch Script**:
+    - Constructs a batch script to obtain the IPv4 addresses of devices on the local network.
+    - Utilizes the `ipconfig` command and parsing techniques to extract IP addresses.
+    - Implements a loop to scan IP addresses within a specified range and record the results in a file (`ipaddresses.txt`).
