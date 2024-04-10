@@ -1,7 +1,7 @@
-# Coatl
+# **Coatl**
 Multiple different simulated malware files for testing your friends, employees or colleagues cyber security skill. 
 
-**HCoatl.bat**
+# HCoatl.bat
 The most obvious one of the bunch, Hitchhiker Coatl is just scare-ware(and very bad scare-ware at that), will pretty much only work on the people worst at cyber security.
 1. Will tell the user it exists with a large and very demanding CMD window
 2. Checks if it was run with admin privelages, if not it requests admin
@@ -20,7 +20,7 @@ The most obvious one of the bunch, Hitchhiker Coatl is just scare-ware(and very 
 15. Copies itself to any shared folders
 16. Creates a second file in the Startup dir that serves as a third reminder and tells them how to delete the virus
 
-**SHCoatl.bat**
+# SHCoatl.bat
 The medium difficulty, Simulation Hitchhiker Coatl is better at its job and also makes it harder to remove by removing browser access and not explicitly telling the user how to remove itself
 1. The script tries to find the shared folder name on the network using the `net share` command and saves it for later use.
 2. It checks if the SMB shared folder exists. If not, the script exits.
@@ -38,7 +38,7 @@ The medium difficulty, Simulation Hitchhiker Coatl is better at its job and also
 14. The script prints a message indicating that it has finished transferring itself to other devices on the network.
 15. Coatl creates a batch file named `StartupConfig.bat` in the Startup folder, providing additional information about the compromise.
 
-**RHCoatl.bat**
+# RHCoatl.bat
 An actual test for your network, Real Hitchhiker Coatl is much closer to an actual virus without causing any damage, might even stump newer cybersec experts.
 Sure, let's break down these steps into smaller, more detailed actions:
 
