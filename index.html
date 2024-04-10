@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Write-Ups</title>
+    <!-- Link to your CSS file for styling -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Cybersecurity Write-Ups</h1>
+    <p>Share your cybersecurity insights and write-ups</p>
+</header>
+
+<main>
+    <section id="writeup-form">
+        <h2>Submit a Write-Up</h2>
+        <form action="submit.php" method="post">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title" required><br><br>
+
+            <label for="author">Author:</label><br>
+            <input type="text" id="author" name="author" required><br><br>
+
+            <label for="content">Write-Up:</label><br>
+            <textarea id="content" name="content" rows="6" required></textarea><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+
+    <section id="writeups-list">
+        <h2>Latest Write-Ups</h2>
+        <!-- Display submitted write-ups here -->
+        <div class="writeup">
+            <h3>Sample Write-Up Title</h3>
+            <p><strong>Author:</strong> John Doe</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non diam felis.</p>
+        </div>
+        <!-- Repeat this structure for each submitted write-up -->
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Cybersecurity Write-Ups</p>
+</footer>
+
+</body>
+</html>
