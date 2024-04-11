@@ -51,7 +51,7 @@
                         author: author,
                         message: message
                     };
-                    fetch('https://api.github.com/repos/CamoGekko/Coatl/contents/posts.json', {
+                    fetch('https://api.github.com/repos/CamoGekko/Coatl/posts.json', {
                         method: 'GET',
                         headers: {
                             'Authorization': 'token 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',
@@ -61,7 +61,7 @@
                     .then(json => {
                         const content = JSON.parse(atob(json.content));
                         content.push(data);
-                        return fetch('https://api.github.com/repos/CamoGekko/Coatl/contents/posts.json', {
+                        return fetch('https://api.github.com/repos/CamoGekko/Coatl/posts.json', {
                             method: 'PUT',
                             headers: {
                                 'Authorization': 'token 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',
