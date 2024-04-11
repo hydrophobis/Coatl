@@ -31,13 +31,13 @@
     </section>
 </main>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" defer></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js" type="module" defer></script>
 
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
@@ -78,8 +78,8 @@
 
   // Function to load and display posts
   function loadPosts() {
-    collection(db, "posts").orderBy("timestamp", "desc")
-    .onSnapshot((querySnapshot) => {
+    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+    onSnapshot(q, (querySnapshot) => {
         const postsSection = document.getElementById("postsSection");
         postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
         querySnapshot.forEach((doc) => {
