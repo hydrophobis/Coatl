@@ -10,7 +10,7 @@
     <header>
         <h1>Coatl</h1>
         <button id="googleSignInBtn">Sign in with Google</button>
-        <button id="addUsernameBtn">Add Username</button>
+        <button id="redirectBtn">Add Username</button>
     </header>
 
     <main>
@@ -141,9 +141,6 @@
 
             const submitBtn = document.getElementById("submitBtn");
             submitBtn.addEventListener("click", submitPost);
-
-            const addUsernameBtn = document.getElementById("addUsernameBtn")
-            addUsernameBtn.addEventListener("click", postData);
         
             // Sign in with Google
             const googleSignInBtn = document.getElementById("googleSignInBtn");
