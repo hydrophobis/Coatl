@@ -68,10 +68,33 @@
                 authorInput.value = email;
             }
 
-            // Function to submit a post
+           // Function to submit a post
             async function submitPost() {
-                // Your submit post logic here
+                // Get the post data from the form fields
+                const authorInput = document.getElementById('author');
+                const messageInput = document.getElementById('message');
+                const author = authorInput.value;
+                const message = messageInput.value;
+            
+                try {
+                    // Add the post to Firebase (replace this with your actual Firebase database logic)
+                    const postsRef = firestore.collection('posts'); // Assuming you have a collection named 'posts'
+                    await postsRef.add({
+                        author: author,
+                        message: message,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp() // Add a timestamp to the post
+                    });
+            
+                    // Clear the form fields after submission
+                    authorInput.value = '';
+                    messageInput.value = '';
+            
+                    console.log('Post submitted successfully!');
+                } catch (error) {
+                    console.error('Error submitting post:', error);
+                }
             }
+
 
             // Function to redirect to the specified page
             function redirectToForm() {
