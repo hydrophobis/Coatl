@@ -91,8 +91,8 @@
             // Sign in with email and password
             const emailSignInBtn = document.getElementById("emailSignInBtn");
             emailSignInBtn.addEventListener("click", () => {
-                const email = prompt("Please enter your email:");
-                const password = prompt("Please enter your password:");
+                var email = prompt("Please enter your email:");
+                var password = prompt("Please enter your password:");
                 signInWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         // User signed in successfully
