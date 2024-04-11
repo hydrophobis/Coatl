@@ -64,9 +64,16 @@
             async function loadPosts() {
                 const postsSection = document.getElementById("postsSection");
                 postsSection.innerHTML = ''; // Clear existing content
+            
+                // Check if placeholder exists before trying to access it
                 const placeholder = document.getElementById("placeholder");
+                if (!placeholder) {
+                    console.error("Placeholder element not found");
+                    return;
+                }
+            
                 placeholder.textContent = "Loading posts..."; // Display loading message
-
+            
                 try {
                     const querySnapshot = await getDocs(orderBy(collection(db, "posts"), "timestamp", "desc"));
                     querySnapshot.forEach((doc) => {
