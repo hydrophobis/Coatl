@@ -11,27 +11,7 @@
     <h1>Mini Social Media</h1>
 </header>
 
-<main>
-    <section>
-        <h2>Create Post</h2>
-        <div>
-            <label for="author">Name:</label><br>
-            <input type="text" id="author" required><br><br>
-            
-            <label for="message">Post:</label><br>
-            <textarea id="message" rows="4" required></textarea><br><br>
-            
-            <button onclick="submitPost()">Post</button>
-        </div>
-    </section>
-    
-    <section id="postsSection">
-        <h2>Recent Posts</h2>
-        <!-- Posts will be loaded here by JS -->
-    </section>
-</main>
-
-<!-- Firebase SDK -->
+    <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
@@ -90,6 +70,26 @@
   // Call loadPosts on script load to display posts
   loadPosts();
 </script>
+
+<main>
+    <section>
+        <h2>Create Post</h2>
+        <div>
+            <label for="author">Name:</label><br>
+            <input type="text" id="author" required><br><br>
+            
+            <label for="message">Post:</label><br>
+            <textarea id="message" rows="4" required></textarea><br><br>
+            
+            <button onclick="submitPost()">Post</button>
+        </div>
+    </section>
+    
+    <section id="postsSection">
+        <h2>Recent Posts</h2>
+        <!-- Posts will be loaded here by JS -->
+    </section>
+</main>
 
 <footer>
     <p>&copy; <?php echo date("Y"); ?> Mini Social Media</p>
