@@ -38,113 +38,44 @@
         <p>&copy; <?php echo date("Y"); ?> Coatl</p>
     </footer>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Import necessary Firebase modules
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
-
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Your web app's Firebase configuration
-            const firebaseConfig = {
-                apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
-                authDomain: "coatl-cc1f4.firebaseapp.com",
-                projectId: "coatl-cc1f4",
-                storageBucket: "coatl-cc1f4.appspot.com",
-                messagingSenderId: "290464623435",
-                appId: "1:290464623435:web:13a2418fa9e5890dae96ce",
-                measurementId: "G-R3BFTJ7HD7"
-            };
-
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-            const auth = getAuth();
-
-            // Function to populate the "Name" field with the user's email
-            function populateNameField(email) {
-                const authorInput = document.getElementById('author');
-                authorInput.value = email;
-            }
-
-           // Function to submit a post
-            async function submitPost() {
-                // Get the post data from the form fields
+            function submitPost() {
                 const authorInput = document.getElementById('author');
                 const messageInput = document.getElementById('message');
                 const author = authorInput.value;
                 const message = messageInput.value;
-            
-                try {
-                    // Add the post to Firebase (replace this with your actual Firebase database logic)
-                    const postsRef = firestore.collection('posts'); // Assuming you have a collection named 'posts'
-                    await postsRef.add({
-                        author: author,
-                        message: message,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp() // Add a timestamp to the post
-                    });
-            
-                    // Clear the form fields after submission
-                    authorInput.value = '';
-                    messageInput.value = '';
-            
-                    console.log('Post submitted successfully!');
-                } catch (error) {
-                    console.error('Error submitting post:', error);
+
+                if (author && message) {
+                    const data = {
+                        username: author,
+                        email: message
+                    };
+                    google.script.run.withSuccessHandler(function(response) {
+                        console.log(response);
+                        // Handle successful response
+                        authorInput.value = '';
+                        messageInput.value = '';
+                        console.log('Post submitted successfully!');
+                    }).withFailureHandler(function(error) {
+                        console.error(error);
+                        // Handle failure
+                    }).doPost(data);
+                } else {
+                    console.error('Error submitting post: Missing author or message');
                 }
             }
 
-
-            // Function to redirect to the specified page
             function redirectToForm() {
                 window.location.href = 'https://docs.google.com/forms/d/1V0lZ1zHXnZbYDtpIxmHntwgTLchw1DuBQeiYSXIDYEo';
             }
 
-            // Add event listener to the "Get Verified" button
             document.getElementById("redirectBtn").addEventListener("click", redirectToForm);
 
-            // Call loadPosts on script load to display posts
-            loadPosts();
-
-            // Add event listener to the submit button
             const submitBtn = document.getElementById("submitBtn");
             submitBtn.addEventListener("click", submitPost);
-        
-            // Sign in with email and password
-            const emailSignInBtn = document.getElementById("emailSignInBtn");
-            emailSignInBtn.addEventListener("click", () => {
-                var email = prompt("Please enter your email:");
-                var password = prompt("Please enter your password:");
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        // User signed in successfully
-                        const user = userCredential.user;
-                        console.log("Signed in as:", user.email);
-                        // Populate the "Name" field with the user's email
-                        populateNameField(user.email);
-                    })
-                    .catch((error) => {
-                        // Handle sign-in errors
-                        console.error("Sign-in error:", error);
-                    });
-            });
 
-
-            // Handle authentication state changes
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    // User is signed in
-                    console.log("User is signed in:", user.email);
-                    // Populate the "Name" field with the user's email
-                    populateNameField(user.email);
-                    // Show sign out button or other authenticated content
-                } else {
-                    // User is signed out
-                    console.log("User is signed out");
-                    // Show sign in button or other non-authenticated content
-                }
-            });
+            // Other Firebase-related code removed
         });
     </script>
 </body>
