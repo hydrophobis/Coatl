@@ -114,26 +114,7 @@
 
             const submitBtn = document.getElementById("submitBtn");
             submitBtn.addEventListener("click", submitPost);
-
-            // Function to submit a post
-            async function submitPost() {
-                const authorInput = document.getElementById('author');
-                const messageInput = document.getElementById('message');
-
-                try {
-                    await addDoc(collection(db, "posts"), {
-                        author: authorInput.value,
-                        message: messageInput.value,
-                        timestamp: serverTimestamp()
-                    });
-                    console.log("Document successfully written!");
-                    authorInput.value = ''; // clear the input after successful submission
-                    messageInput.value = ''; // clear the input after successful submission
-                    loadPosts(); // Reload posts after submitting a new post
-                } catch (error) {
-                    console.error("Error writing document: ", error);
-                }
-            }
+        
 
             // Sign in with Google
             const googleSignInBtn = document.getElementById("googleSignInBtn");
