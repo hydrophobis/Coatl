@@ -1,4 +1,4 @@
-// The post button does not work
+// The post button does not have a const assigned
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +62,7 @@
             // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
-            const db = getFirestore(app);
+            const db = "gs://coatl-cc1f4.appspot.com";
             const auth = getAuth();
 
             // Function to load and display posts
