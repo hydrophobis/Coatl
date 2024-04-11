@@ -37,14 +37,14 @@
             var username = document.getElementById('username').value;
             var email = document.getElementById('email').value;
 
-            var payload = {
+            var data = {
                 username: username,
                 email: email
             };
 
-            fetch('https://script.google.com/macros/s/AKfycbzbK7Nx7RB0cLbrkJQELiQXMfSCk2n3IlmIc_DyXWByqQRZCYgvd8uDzIG-lu0ME0FuLA/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbxJAXjlu-k_7d6JDhFk9A606GNH0o05Y6atx5Xg_CTG0qX6zNZrYOLxf9GJYVt_SuPY-g/exec', {
                 method: 'POST',
-                body: payload
+                body: data
             })
             .then(response => response.text())
             .then(data => console.log(data))
