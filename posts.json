@@ -2,11 +2,11 @@
     {
         "author": "John Doe",
         "message": "Hello, World!",
-        "id": 1
+        "postId": 0
     },
     {
         "author": "Jane Smith",
         "message": "This is a test post.",
-        "id": 2
+        "postId": 1
     }
 ]
