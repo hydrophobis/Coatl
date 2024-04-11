@@ -10,7 +10,7 @@
     <header>
         <h1>Coatl</h1>
         <button id="googleSignInBtn">Sign in with Google</button>
-        <button id="redirectBtn">Add Username</button>
+        <button id="redirectBtn">Get Verified</button>
     </header>
 
     <main>
@@ -40,10 +40,9 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        // Import necessary Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
-        import { getFirestore, collection, addDoc, orderBy, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -62,83 +61,31 @@
             // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
-            const db = "coatl-cc1f4.appspot.com";
             const auth = getAuth();
+
+            // Function to populate the "Name" field with the user's email
+            function populateNameField(email) {
+                const authorInput = document.getElementById('author');
+                authorInput.value = email;
+            }
 
             // Function to submit a post
             async function submitPost() {
-                console.log("Submit button clicked"); // Check if the function is called
-                const authorInput = document.getElementById('author');
-                const messageInput = document.getElementById('message');
-                console.log("Author:", authorInput.value); // Check author input value
-                console.log("Message:", messageInput.value); // Check message input value
-            
-                console.log("Adding post to database..."); // Log before adding post
-                try {
-                    await addDoc(collection(db, "posts"), {
-                        author: authorInput.value,
-                        message: messageInput.value,
-                        timestamp: serverTimestamp()
-                    });
-                    console.log("Document successfully written!"); // Log after successful addition
-                    // Rest of the code...
-                } catch (error) {
-                    console.error("Error writing document: ", error);
-                }
+                // Your submit post logic here
             }
 
-            async function loadPosts() {
-                const postsSection = document.getElementById("postsSection");
-                postsSection.innerHTML = ''; // Clear existing content
-                
-                const placeholder = document.getElementById("placeholder");
-                placeholder.textContent = "Loading posts..."; // Display loading message
-                
-                try {
-                    const querySnapshot = await getDocs(orderBy(collection(db, "posts"), "timestamp", "desc"));
-                    if (querySnapshot.empty) {
-                        placeholder.textContent = "No posts available"; // Display message when no posts are found
-                    } else {
-                        querySnapshot.forEach((doc) => {
-                            const post = doc.data();
-                            const postElement = document.createElement("div");
-                            postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
-                            postsSection.appendChild(postElement);
-                        });
-                        placeholder.textContent = ""; // Clear loading message after posts are loaded
-                    }
-                } catch (error) {
-                    console.error("Error loading posts:", error);
-                    placeholder.textContent = "Failed to load posts"; // Display error message if loading fails
-                }
+            // Function to redirect to the specified page
+            function redirectToForm() {
+                window.location.href = 'https://docs.google.com/forms/d/1V0lZ1zHXnZbYDtpIxmHntwgTLchw1DuBQeiYSXIDYEo';
             }
-            
-            function postData() {
-                var url = 'https://script.google.com/macros/s/AKfycby2GPMaDcNyL8q2EQKgwg2pgxG3ESZ5UQCw9W6HQl_2bO0kMUtAYYvkQX_l6XHZm_nTSQ';
-                var data = {
-                  username: document.getElementById('author').value,
-                  email: document.getElementById('email').value
-                };
-                fetch(url, {
-                  method: 'POST',
-                  body: JSON.stringify(data)
-                })
-                .then(response => response.text())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
-            }   
 
-            function redirectToPage() {
-                // Redirect to the specified page
-                window.location.href = 'https://camogekko.github.io/Coatl/AddUsername.html'; // Replace 'https://example.com' with your desired URL
-            }
-    
-            // Add event listener to the button
-            document.getElementById("redirectBtn").addEventListener("click", redirectToPage);
+            // Add event listener to the "Get Verified" button
+            document.getElementById("redirectBtn").addEventListener("click", redirectToForm);
 
             // Call loadPosts on script load to display posts
             loadPosts();
 
+            // Add event listener to the submit button
             const submitBtn = document.getElementById("submitBtn");
             submitBtn.addEventListener("click", submitPost);
         
@@ -151,9 +98,11 @@
                         // User signed in successfully
                         const user = result.user;
                         console.log("Signed in as:", user.displayName);
+                        // Populate the "Name" field with the user's email
+                        populateNameField(user.email);
                     })
                     .catch((error) => {
-                        // Handle errors
+                        // Handle sign-in errors
                         console.error("Sign-in error:", error);
                     });
             });
