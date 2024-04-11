@@ -126,7 +126,15 @@
                 .then(response => response.text())
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
-            }    
+            }   
+
+            function redirectToPage() {
+                // Redirect to the specified page
+                window.location.href = 'https://camogekko.github.io/Coatl/AddUsername.html'; // Replace 'https://example.com' with your desired URL
+            }
+    
+            // Add event listener to the button
+            document.getElementById("redirectBtn").addEventListener("click", redirectToPage);
 
             // Call loadPosts on script load to display posts
             loadPosts();
