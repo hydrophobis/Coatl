@@ -51,16 +51,20 @@
                         username: author,
                         email: message
                     };
-                    google.script.run.withSuccessHandler(function(response) {
-                        console.log(response);
-                        // Handle successful response
-                        authorInput.value = '';
-                        messageInput.value = '';
-                        console.log('Post submitted successfully!');
-                    }).withFailureHandler(function(error) {
-                        console.error(error);
-                        // Handle failure
-                    }).doPost(data);
+                    fetch('https://script.google.com/a/macros/parkwayschools.net/s/AKfycbwAhHsMA0w0DUUFSWP7QhAHjtiUKxEOSF-qM8SV6JXhrtAu_ElDhXRaU_MyEN_97nZ-/exec', {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Post submitted successfully!');
+                            authorInput.value = '';
+                            messageInput.value = '';
+                        } else {
+                            console.error('Failed to submit post');
+                        }
+                    })
+                    .catch(error => console.error('Error submitting post:', error));
                 } else {
                     console.error('Error submitting post: Missing author or message');
                 }
