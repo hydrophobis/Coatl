@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Data</title>
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Post Data</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Enter Your Information</h2>
+            <div>
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" required><br><br>
+                
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" required><br><br>
+                
+                <button id="submitBtn">Submit</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <?php echo date("Y"); ?> Your Website</p>
+    </footer>
+
+    <script>
+        function postData() {
+            var url = 'https://script.google.com/macros/s/AKfycby2GPMaDcNyL8q2EQKgwg2pgxG3ESZ5UQCw9W6HQl_2bO0kMUtAYYvkQX_l6XHZm_nTSQ';
+            var data = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value
+            };
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", postData);
+    </script>
+</body>
+</html>
