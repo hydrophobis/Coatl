@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Social Media</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Mini Social Media</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Create Post</h2>
+        <div>
+            <label for="author">Name:</label><br>
+            <input type="text" id="author" required><br><br>
+            
+            <label for="message">Post:</label><br>
+            <textarea id="message" rows="4" required></textarea><br><br>
+            
+            <button onclick="submitPost()">Post</button>
+        </div>
+    </section>
+    
+    <section id="postsSection">
+        <h2>Recent Posts</h2>
+        <!-- Posts will be loaded here by JS -->
+    </section>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
+    authDomain: "coatl-cc1f4.firebaseapp.com",
+    projectId: "coatl-cc1f4",
+    storageBucket: "coatl-cc1f4.appspot.com",
+    messagingSenderId: "290464623435",
+    appId: "1:290464623435:web:c5808d95e1b45593ae96ce",
+    measurementId: "G-K94X7NB3P5"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = firebase.firestore();
+
+  // Function to submit a post
+  function submitPost() {
+    const authorInput = document.getElementById('author');
+    const messageInput = document.getElementById('message');
+
+    db.collection("posts").add({
+        author: authorInput.value,
+        message: messageInput.value,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        console.log("Document successfully written!");
+        authorInput.value = ''; // clear the input after successful submission
+        messageInput.value = ''; // clear the input after successful submission
+    })
+    .catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+  }
+
+  // Function to load and display posts
+  function loadPosts() {
+    db.collection("posts").orderBy("timestamp", "desc")
+    .onSnapshot((querySnapshot) => {
+        const postsSection = document.getElementById("postsSection");
+        postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
+        querySnapshot.forEach((doc) => {
+            const post = doc.data();
+            const postElement = document.createElement("div");
+            postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
+            postsSection.appendChild(postElement);
+        });
+    });
+  }
+
+  // Call loadPosts on script load to display posts
+  loadPosts();
+</script>
+
+<footer>
+    <p>&copy; <?php echo date("Y"); ?> Mini Social Media</p>
+</footer>
+</body>
+</html>
