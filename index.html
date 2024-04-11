@@ -33,6 +33,9 @@
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -40,27 +43,29 @@
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
   // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
-    authDomain: "coatl-cc1f4.firebaseapp.com",
-    projectId: "coatl-cc1f4",
-    storageBucket: "coatl-cc1f4.appspot.com",
-    messagingSenderId: "290464623435",
-    appId: "1:290464623435:web:c5808d95e1b45593ae96ce",
-    measurementId: "G-K94X7NB3P5"
-  };
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
+      authDomain: "coatl-cc1f4.firebaseapp.com",
+      projectId: "coatl-cc1f4",
+      storageBucket: "coatl-cc1f4.appspot.com",
+      messagingSenderId: "290464623435",
+      appId: "1:290464623435:web:13a2418fa9e5890dae96ce",
+      measurementId: "G-R3BFTJ7HD7"
+    };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app); // Get Firestore instance
+ // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize Cloud Firestore
+  const db = firebase.firestore();
 
   // Function to submit a post
   function submitPost() {
     const authorInput = document.getElementById('author');
     const messageInput = document.getElementById('message');
 
-    addDoc(collection(db, "posts"), {
+    db.collection("posts").add({
         author: authorInput.value,
         message: messageInput.value,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -77,16 +82,16 @@
 
   // Function to load and display posts
   function loadPosts() {
-    const postsSection = document.getElementById("postsSection");
-    postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
-
-    const q = collection(db, "posts");
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        const postElement = document.createElement("div");
-        postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
-        postsSection.appendChild(postElement);
+    db.collection("posts").orderBy("timestamp", "desc")
+    .onSnapshot((querySnapshot) => {
+        const postsSection = document.getElementById("postsSection");
+        postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
+        querySnapshot.forEach((doc) => {
+            const post = doc.data();
+            const postElement = document.createElement("div");
+            postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
+            postsSection.appendChild(postElement);
+        });
     });
   }
 
