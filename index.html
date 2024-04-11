@@ -65,28 +65,28 @@
             const auth = getAuth();
 
             // Function to load and display posts
-            async function loadPosts() {
-                const postsSection = document.getElementById("postsSection");
-                postsSection.innerHTML = ''; // Clear existing content
-                
-                const placeholder = document.getElementById("placeholder");
-                placeholder.textContent = "Loading posts..."; // Display loading message
-                
+            // Function to submit a post
+            async function submitPost() {
+                const authorInput = document.getElementById('author');
+                const messageInput = document.getElementById('message');
+            
                 try {
-                    const querySnapshot = await getDocs(orderBy(collection(db, "posts"), "timestamp", "desc"));
-                    querySnapshot.forEach((doc) => {
-                        const post = doc.data();
-                        const postElement = document.createElement("div");
-                        postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
-                        postsSection.appendChild(postElement);
+                    await addDoc(collection(db, "posts"), {
+                        author: authorInput.value,
+                        message: messageInput.value,
+                        timestamp: serverTimestamp()
                     });
-                    placeholder.textContent = ""; // Clear loading message after posts are loaded
+                    console.log("Document successfully written!");
+                    authorInput.value = ''; // clear the input after successful submission
+                    messageInput.value = ''; // clear the input after successful submission
+                    // Clear the post section before reloading posts
+                    const postsSection = document.getElementById("postsSection");
+                    postsSection.innerHTML = '';
+                    loadPosts(); // Reload posts after submitting a new post
                 } catch (error) {
-                    console.error("Error loading posts:", error);
-                    placeholder.textContent = "Failed to load posts"; // Display error message if loading fails
+                    console.error("Error writing document: ", error);
                 }
             }
-
             // Call loadPosts on script load to display posts
             loadPosts();
 
