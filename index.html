@@ -1,3 +1,4 @@
+// The post button does not work
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,6 +85,28 @@
                     // Rest of the code...
                 } catch (error) {
                     console.error("Error writing document: ", error);
+                }
+            }
+
+            async function loadPosts() {
+                const postsSection = document.getElementById("postsSection");
+                postsSection.innerHTML = ''; // Clear existing content
+                
+                const placeholder = document.getElementById("placeholder");
+                placeholder.textContent = "Loading posts..."; // Display loading message
+                
+                try {
+                    const querySnapshot = await getDocs(orderBy(collection(db, "posts"), "timestamp", "desc"));
+                    querySnapshot.forEach((doc) => {
+                        const post = doc.data();
+                        const postElement = document.createElement("div");
+                        postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
+                        postsSection.appendChild(postElement);
+                    });
+                    placeholder.textContent = ""; // Clear loading message after posts are loaded
+                } catch (error) {
+                    console.error("Error loading posts:", error);
+                    placeholder.textContent = "Failed to load posts"; // Display error message if loading fails
                 }
             }
             // Call loadPosts on script load to display posts
