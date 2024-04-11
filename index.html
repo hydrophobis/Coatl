@@ -67,22 +67,21 @@
             // Function to load and display posts
             // Function to submit a post
             async function submitPost() {
+                console.log("Submit button clicked"); // Check if the function is called
                 const authorInput = document.getElementById('author');
                 const messageInput = document.getElementById('message');
+                console.log("Author:", authorInput.value); // Check author input value
+                console.log("Message:", messageInput.value); // Check message input value
             
+                console.log("Adding post to database..."); // Log before adding post
                 try {
                     await addDoc(collection(db, "posts"), {
                         author: authorInput.value,
                         message: messageInput.value,
                         timestamp: serverTimestamp()
                     });
-                    console.log("Document successfully written!");
-                    authorInput.value = ''; // clear the input after successful submission
-                    messageInput.value = ''; // clear the input after successful submission
-                    // Clear the post section before reloading posts
-                    const postsSection = document.getElementById("postsSection");
-                    postsSection.innerHTML = '';
-                    loadPosts(); // Reload posts after submitting a new post
+                    console.log("Document successfully written!"); // Log after successful addition
+                    // Rest of the code...
                 } catch (error) {
                     console.error("Error writing document: ", error);
                 }
