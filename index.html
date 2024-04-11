@@ -30,77 +30,76 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
     </script>
-<header>
-    <h1>Coatl</h1>
-</header>
-
-
+    
+    <header>
+        <h1>Coatl</h1>
+    </header>
 
     <!-- Firebase SDK -->
-<script>
-  const db = firebase.firestore(); // Initialize Cloud Firestore
+    <script>
+      const db = firebase.firestore(); // Initialize Cloud Firestore
 
-  // Function to submit a post
-  function submitPost() {
-    const authorInput = document.getElementById('author');
-    const messageInput = document.getElementById('message');
+      // Function to submit a post
+      function submitPost() {
+        const authorInput = document.getElementById('author');
+        const messageInput = document.getElementById('message');
 
-    db.collection("posts").add({
-        author: authorInput.value,
-        message: messageInput.value,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-        console.log("Document successfully written!");
-        authorInput.value = ''; // clear the input after successful submission
-        messageInput.value = ''; // clear the input after successful submission
-    })
-    .catch((error) => {
-        console.error("Error writing document: ", error);
-    });
-  }
-
-  // Function to load and display posts
-  function loadPosts() {
-    db.collection("posts").orderBy("timestamp", "desc")
-    .onSnapshot((querySnapshot) => {
-        const postsSection = document.getElementById("postsSection");
-        postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
-        querySnapshot.forEach((doc) => {
-            const post = doc.data();
-            const postElement = document.createElement("div");
-            postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
-            postsSection.appendChild(postElement);
+        db.collection("posts").add({
+            author: authorInput.value,
+            message: messageInput.value,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            console.log("Document successfully written!");
+            authorInput.value = ''; // clear the input after successful submission
+            messageInput.value = ''; // clear the input after successful submission
+        })
+        .catch((error) => {
+            console.error("Error writing document: ", error);
         });
-    });
-  }
+      }
 
-  // Call loadPosts on script load to display posts
-  loadPosts();
-</script>
+      // Function to load and display posts
+      function loadPosts() {
+        db.collection("posts").orderBy("timestamp", "desc")
+        .onSnapshot((querySnapshot) => {
+            const postsSection = document.getElementById("postsSection");
+            postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                const postElement = document.createElement("div");
+                postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
+                postsSection.appendChild(postElement);
+            });
+        });
+      }
 
-<main>
-    <section>
-        <h2>Create Post</h2>
-        <div>
-            <label for="author">Name:</label><br>
-            <input type="text" id="author" required><br><br>
-            
-            <label for="message">Post:</label><br>
-            <textarea id="message" rows="4" required></textarea><br><br>
-            
-            <button onclick="submitPost()">Post</button>
-        </div>
-    </section>
-    
-    <section id="postsSection">
-        <h2>Recent Posts</h2>
-        <!-- Posts will be loaded here by JS -->
-    </section>
-</main>
+      // Call loadPosts on script load to display posts
+      loadPosts();
+    </script>
 
-<footer>
-    <p>&copy; <?php echo date("Y"); ?> Coatl</p>
-</footer>
+    <main>
+        <section>
+            <h2>Create Post</h2>
+            <div>
+                <label for="author">Name:</label><br>
+                <input type="text" id="author" required><br><br>
+                
+                <label for="message">Post:</label><br>
+                <textarea id="message" rows="4" required></textarea><br><br>
+                
+                <button onclick="submitPost()">Post</button>
+            </div>
+        </section>
+        
+        <section id="postsSection">
+            <h2>Recent Posts</h2>
+            <!-- Posts will be loaded here by JS -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <?php echo date("Y"); ?> Coatl</p>
+    </footer>
 </body>
 </html>
