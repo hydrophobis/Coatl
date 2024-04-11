@@ -30,8 +30,7 @@
         <section id="postsSection">
             <h2>Recent Posts</h2>
             <div id="placeholder">Loading posts...</div>
-                <script>
-                </script>
+            <!-- Posts will be loaded here by JS -->
         </section>
     </main>
 
@@ -52,16 +51,27 @@
                         author: author,
                         message: message
                     };
-                    fetch('https://raw.githubusercontent.com/CamoGekko/Coatl/main/posts.json')
+                    fetch('https://api.github.com/repos/CamoGekko/Coatl/contents/posts.json', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'token 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',
+                        },
+                    })
                     .then(response => response.json())
-                    .then(posts => {
-                        posts.push(data);
-                        return fetch('https://raw.githubusercontent.com/CamoGekko/Coatl/main/posts.json', {
+                    .then(json => {
+                        const content = JSON.parse(atob(json.content));
+                        content.push(data);
+                        return fetch('https://api.github.com/repos/CamoGekko/Coatl/contents/posts.json', {
                             method: 'PUT',
-                            body: JSON.stringify(posts),
                             headers: {
-                                'Content-Type': 'application/json'
-                            }
+                                'Authorization': 'token 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',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                message: 'Update posts.json',
+                                content: btoa(JSON.stringify(content)),
+                                sha: json.sha,
+                            }),
                         });
                     })
                     .then(response => {
@@ -81,7 +91,7 @@
             }
 
             function loadPosts() {
-                fetch('https://raw.githubusercontent.com/yourusername/yourrepository/master/posts.json')
+                fetch('https://raw.githubusercontent.com/CamoGekko/Coatl/main/posts.json')
                 .then(response => response.json())
                 .then(posts => {
                     const postsSection = document.getElementById('postsSection');
