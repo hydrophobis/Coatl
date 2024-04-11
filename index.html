@@ -52,11 +52,11 @@
                         author: author,
                         message: message
                     };
-                    fetch('https://raw.githubusercontent.com/yourusername/yourrepository/master/posts.json')
+                    fetch('https://raw.githubusercontent.com/CamoGekko/Coatl/main/posts.json')
                     .then(response => response.json())
                     .then(posts => {
                         posts.push(data);
-                        return fetch('https://raw.githubusercontent.com/yourusername/yourrepository/master/posts.json', {
+                        return fetch('https://raw.githubusercontent.com/CamoGekko/Coatl/main/posts.json', {
                             method: 'PUT',
                             body: JSON.stringify(posts),
                             headers: {
