@@ -21,7 +21,7 @@
             <label for="message">Post:</label><br>
             <textarea id="message" rows="4" required></textarea><br><br>
             
-            <button onclick="submitPost()">Post</button>
+            <button id="postButton">Post</button>
         </div>
     </section>
     
@@ -75,6 +75,9 @@
         console.error("Error writing document: ", error);
     });
   }
+
+  // Call submitPost when the button is clicked
+  document.getElementById('postButton').addEventListener('click', submitPost);
 
   // Function to load and display posts
   function loadPosts() {
