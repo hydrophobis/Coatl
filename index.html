@@ -35,14 +35,8 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
+<script>
   // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
     authDomain: "coatl-cc1f4.firebaseapp.com",
@@ -54,16 +48,16 @@
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app); // Initialize Cloud Firestore
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.firestore(); // Initialize Cloud Firestore
 
   // Function to submit a post
   function submitPost() {
     const authorInput = document.getElementById('author');
     const messageInput = document.getElementById('message');
 
-    addDoc(collection(db, "posts"), {
+    db.collection("posts").add({
         author: authorInput.value,
         message: messageInput.value,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -80,15 +74,16 @@
 
   // Function to load and display posts
   function loadPosts() {
-    const postsSection = document.getElementById("postsSection");
-    postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
-
-    const querySnapshot = await getDocs(collection(db, "posts"));
-    querySnapshot.forEach((doc) => {
-        const post = doc.data();
-        const postElement = document.createElement("div");
-        postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
-        postsSection.appendChild(postElement);
+    db.collection("posts").orderBy("timestamp", "desc")
+    .onSnapshot((querySnapshot) => {
+        const postsSection = document.getElementById("postsSection");
+        postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
+        querySnapshot.forEach((doc) => {
+            const post = doc.data();
+            const postElement = document.createElement("div");
+            postElement.innerHTML = `<div class='post'><h3>${post.author}</h3><p>${post.message}</p></div>`;
+            postsSection.appendChild(postElement);
+        });
     });
   }
 
