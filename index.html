@@ -34,7 +34,11 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js" defer></script>
 
-<script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
@@ -47,17 +51,17 @@
   };
 
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
 
   // Initialize Cloud Firestore
-  const db = firebase.firestore();
+  const db = getFirestore(app);
 
   // Function to submit a post
   function submitPost() {
     const authorInput = document.getElementById('author');
     const messageInput = document.getElementById('message');
 
-    db.collection("posts").add({
+    addDoc(collection(db, "posts"), {
         author: authorInput.value,
         message: messageInput.value,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -74,7 +78,7 @@
 
   // Function to load and display posts
   function loadPosts() {
-    db.collection("posts").orderBy("timestamp", "desc")
+    collection(db, "posts").orderBy("timestamp", "desc")
     .onSnapshot((querySnapshot) => {
         const postsSection = document.getElementById("postsSection");
         postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
