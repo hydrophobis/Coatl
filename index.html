@@ -38,82 +38,15 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function submitPost() {
-                const authorInput = document.getElementById('author');
-                const messageInput = document.getElementById('message');
-                const author = authorInput.value;
-                const message = messageInput.value;
-
-                if (author && message) {
-                    const data = {
-                        author: author,
-                        message: message
-                    };
-                    fetch('https://api.github.com/repos/CamoGekko/Coatl/posts.json', {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': 'token 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',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(json => {
-                        const content = JSON.parse(atob(json.content));
-                        content.push(data);
-                        return fetch('https://api.github.com/repos/CamoGekko/Coatl/posts.json', {
-                            method: 'PUT',
-                            headers: {
-                                'Authorization': 'token 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',
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                message: 'Update posts.json',
-                                content: btoa(JSON.stringify(content)),
-                                sha: json.sha,
-                            }),
-                        });
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Post submitted successfully!');
-                            authorInput.value = '';
-                            messageInput.value = '';
-                            loadPosts();
-                        } else {
-                            console.error('Failed to submit post');
-                        }
-                    })
-                    .catch(error => console.error('Error submitting post:', error));
-                } else {
-                    console.error('Error submitting post: Missing author or message');
-                }
-            }
-
-            function loadPosts() {
-                fetch('https://raw.githubusercontent.com/CamoGekko/Coatl/main/posts.json')
-                .then(response => response.json())
-                .then(posts => {
-                    const postsSection = document.getElementById('postsSection');
-                    postsSection.innerHTML = ''; // Clear previous posts
-                    posts.forEach(post => {
-                        const postElement = document.createElement('div');
-                        postElement.innerHTML = `<p><strong>${post.author}</strong>: ${post.message}</p>`;
-                        postsSection.appendChild(postElement);
-                    });
-                })
-                .catch(error => console.error('Error loading posts:', error));
-            }
-
-            function redirectToForm() {
-                window.location.href = 'https://docs.google.com/forms/d/1V0lZ1zHXnZbYDtpIxmHntwgTLchw1DuBQeiYSXIDYEo';
-            }
-
-            document.getElementById("redirectBtn").addEventListener("click", redirectToForm);
-
-            const submitBtn = document.getElementById("submitBtn");
-            submitBtn.addEventListener("click", submitPost);
-
-            loadPosts();
+        const posts = fetch("raw.github.com/camogekko/coatl/main/posts.json");
+        const parsed = JSON.parse(posts);
+        const postSection = document.getElementById('postsSection');
+        const postElement = document.createElement('div');
+        
+        
+        parsed.array.forEach(post => {
+            postElement.innerHTML = '<p><strong>${post.author}</strong>: ${post.message}</p>';
+            postSection.appendChild(postElement);
         });
     </script>
 </body>

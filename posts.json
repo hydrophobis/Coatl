@@ -1,10 +1,12 @@
 [
     {
         "author": "John Doe",
-        "message": "Hello, World!"
+        "message": "Hello, World!",
+        "id": 1
     },
     {
         "author": "Jane Smith",
-        "message": "This is a test post."
+        "message": "This is a test post.",
+        "id": 2
     }
 ]
