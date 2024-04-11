@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "author": "John Doe",
+        "message": "Hello, World!"
+    },
+    {
+        "author": "Jane Smith",
+        "message": "This is a test post."
+    }
+]
