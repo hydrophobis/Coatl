@@ -21,7 +21,7 @@
             <label for="message">Post:</label><br>
             <textarea id="message" rows="4" required></textarea><br><br>
             
-            <button id="postButton">Post</button>
+            <button onclick="submitPost()">Post</button>
         </div>
     </section>
     
@@ -31,15 +31,10 @@
     </section>
 </main>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" defer></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js" defer></script>
-
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, orderBy, query, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-  // Your web app's Firebase configuration
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+<script>
+  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
     authDomain: "coatl-cc1f4.firebaseapp.com",
@@ -51,17 +46,17 @@
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 
   // Initialize Cloud Firestore
-  const db = getFirestore(app);
+  const db = firebase.firestore();
 
   // Function to submit a post
   function submitPost() {
     const authorInput = document.getElementById('author');
     const messageInput = document.getElementById('message');
 
-    addDoc(collection(db, "posts"), {
+    db.collection("posts").add({
         author: authorInput.value,
         message: messageInput.value,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -76,13 +71,10 @@
     });
   }
 
-  // Call submitPost when the button is clicked
-  document.getElementById('postButton').addEventListener('click', submitPost);
-
   // Function to load and display posts
   function loadPosts() {
-    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
-    onSnapshot(q, (querySnapshot) => {
+    db.collection("posts").orderBy("timestamp", "desc")
+    .onSnapshot((querySnapshot) => {
         const postsSection = document.getElementById("postsSection");
         postsSection.innerHTML = '<h2>Recent Posts</h2>'; // Reset the section
         querySnapshot.forEach((doc) => {
@@ -97,6 +89,7 @@
   // Call loadPosts on script load to display posts
   loadPosts();
 </script>
+
 
 <footer>
     <p>&copy; <?php echo date("Y"); ?> Mini Social Media</p>
