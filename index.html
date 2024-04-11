@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>Coatl</title>
     <style>
-        body {
+body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -21,25 +21,45 @@
 
         main {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         section {
             margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
         }
 
         label {
             font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
         }
 
         input[type="text"],
         textarea {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
+            margin: 5px 0 15px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
         }
 
         button {
@@ -49,6 +69,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
 
         button:hover {
@@ -58,7 +79,10 @@
         #postsSection {
             background-color: #fff;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         footer {
@@ -66,9 +90,9 @@
             color: #fff;
             text-align: center;
             padding: 10px;
+            width: 100%;
             position: fixed;
             bottom: 0;
-            width: 100%;
         }
 
         /* Responsive design */
