@@ -11,6 +11,7 @@
     <header>
         <h1>Coatl</h1>
         <button id="googleSignInBtn">Sign in with Google</button>
+        <button id="addUsernameBtn">Add Username</button>
     </header>
 
     <main>
@@ -108,11 +109,29 @@
                     placeholder.textContent = "Failed to load posts"; // Display error message if loading fails
                 }
             }
+
+            function postData(string username, string email){
+                var url = 'https://script.google.com/macros/s/AKfycby2GPMaDcNyL8q2EQKgwg2pgxG3ESZ5UQCw9W6HQl_2bO0kMUtAYYvkQX_l6XHZm_nTSQ/exec';
+                var data = {
+                  username: username,
+                  email: email
+                };
+                fetch(url, {
+                  method: 'POST',
+                  payload: data
+                })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }    
             // Call loadPosts on script load to display posts
             loadPosts();
 
             const submitBtn = document.getElementById("submitBtn");
             submitBtn.addEventListener("click", submitPost);
+
+            const addUsernameBtn = document.getElementById("addUsernameBtn")
+            addUsernameBtn.addEventListener("click", postData("test", "test"))
         
 
             // Sign in with Google
