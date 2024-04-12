@@ -1,0 +1,21 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and deploy website
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages  # Change this to your deployment branch
+          FOLDER: _site  # Change this to your build output directory
