@@ -2,20 +2,32 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const PORT = 8000;
 
 app.use(bodyParser.json());
 app.use(express.static('public')); // Serve static files from 'public' directory
+app.use(cors());
+
+// Allow requests only from a specific origin
+app.use(cors({
+    origin: 'https://cautious-fiesta-5gq5gp6p4rq9h76wj-8000.app.github.dev/'
+}));
+
+
+//app.listen(PORT () => {
+//    console.log(`Server is running on port ${PORT}`);
+//});
 
 // Route to handle POST requests
-app.post('/post', (req, res) => {
-    const data = req.body;
-    const filePath = path.join(__dirname, 'post/posts.json');
+app.post('/post/:postId/comment', (req, res) => {
+    const postId = req.params.postId;
+    const commentData = req.body;
 
     // Read the existing posts
-    fs.readFile(filePath, (err, content) => {
+    fs.readFile(postsFilePath, (err, content) => {
         if (err) {
             console.error('Error reading posts:', err);
             res.status(500).send('Error reading posts');
@@ -23,21 +35,30 @@ app.post('/post', (req, res) => {
         }
 
         try {
-            const posts = JSON.parse(content);
-            posts.push({
-                postId: Math.random().toString(36).substr(2, 9), // Random ID
-                author: data.author,
-                message: data.message
-            });
+            let posts = JSON.parse(content);
+
+            // Find the post with the specified postId
+            const postIndex = posts.findIndex(post => post.postId === postId);
+
+            if (postIndex === -1) {
+                res.status(404).send('Post not found');
+                return;
+            }
+
+            // Add the comment to the post's comments array
+            if (!posts[postIndex].comments) {
+                posts[postIndex].comments = [];
+            }
+            posts[postIndex].comments.push(commentData);
 
             // Write updated posts back to file
-            fs.writeFile(filePath, JSON.stringify(posts, null, 2), err => {
+            fs.writeFile(postsFilePath, JSON.stringify(posts, null, 2), err => {
                 if (err) {
-                    console.error('Error saving post:', err);
-                    res.status(500).send('Error saving post');
+                    console.error('Error saving posts:', err);
+                    res.status(500).send('Error saving posts');
                     return;
                 }
-                res.status(200).send('Post saved');
+                res.status(200).json(posts[postIndex]);
             });
         } catch (parseError) {
             console.error('Error parsing JSON:', parseError);
