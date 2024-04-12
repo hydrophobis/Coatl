@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coatl</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module">
+        // Import the necessary functions from the Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+        import { getAuth, signInWithEmailAndPassword as signInWithEmailAndPasswordFirebase } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAu5eH-8OEAunh1jjIzoqd9-CDtHULMqyY",
+            authDomain: "coatl-cc1f4.firebaseapp.com",
+            projectId: "coatl-cc1f4",
+            storageBucket: "coatl-cc1f4.appspot.com",
+            messagingSenderId: "290464623435",
+            appId: "1:290464623435:web:13a2418fa9e5890dae96ce",
+            measurementId: "G-R3BFTJ7HD7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+    </script>
+    
+
+
+</head>
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <header>
+        <h1>Coatl<img src="images/cybercoatlbig.png"></h1>
+        <a href="#" onclick="redirectToGoogleForms()">
+            <img src="images/verify.png" alt="Verify">
+        </a>
+    </header>
+
+    <main>
+        
+        <section>
+            <img src="images/create post.png" alt="Create Post">
+            <div>
+                <label for="author">Author:</label>
+                <input type="text" id="author" required><br>
+                
+                <label for="message">Post:</label>
+                <textarea id="message" rows="4" required></textarea><br>
+                
+                <button onclick="submitPostBtn()">
+                    <img src="images/post(but like better).png" alt="Post">
+                </button>
+            </div>
+        </section>
+        
+        <section id="recentPosts">
+            <h2>Recent Posts</h2>
+            <section id="postSection" >
+
+            </section>
+        </section>
+        
+        <section id="search">
+            <h2>Search Posts</h2>
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button onclick="searchPosts()">Search</button>
+        </section>
+    </main>
+
+    <script>
+        // Fetch the posts data from the specified directory
+        function fetchPosts(){
+            fetch('http://localhost:8000/post/')
+                .then(response => response.json())
+                .then(posts => {
+                    const postSection = document.getElementById('postSection');
+                    // Clear previous posts
+                    postSection.innerHTML = '';
+                    posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.innerHTML = `<p><strong>${post.author}</strong> (ID: ${post.postId}):<br> ${post.message}</p>`;
+                        postSection.appendChild(postElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching posts:', error));
+        }
+
+        fetchPosts();
+    
+        // Function to search posts
+        function searchPosts() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const posts = document.querySelectorAll('#postsSection div');
+    
+            posts.forEach(post => {
+                const postText = post.textContent.toLowerCase();
+                if (postText.includes(searchQuery)) {
+                    post.style.display = 'block'; // Show matching posts
+                } else {
+                    post.style.display = 'none'; // Hide non-matching posts
+                }
+            });
+        }
+    
+        function submitPostBtn() {
+            const author = document.getElementById('author').value;
+            const message = document.getElementById('message').value;
+
+            if (author == '' || message == ''){
+                throw new Error('Author or Message box is blank') 
+            }
+    
+            fetch('http://localhost:8000/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ author, message })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error posting:', error));
+
+            fetchPosts();
+        }
+
+
+        // Function to search postss
+        function searchPosts() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const posts = document.querySelectorAll('#postsSection div');
+
+            posts.forEach(post => {
+                const postText = post.textContent.toLowerCase();
+                if (postText.includes(searchQuery)) {
+                    post.style.display = 'block'; // Show matching posts
+                } else {
+                    post.style.display = 'none'; // Hide non-matching posts
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url(backgrounds/Coatle-Plus.png);
+    overflow-y: auto
+}
+
+header {
+    background-color: #333;
+    background-image: url(backgrounds/Coatle-hex.png);
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: xx-large;
+}
+
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #71b967;
+}
+
+section {
+    margin-bottom: 20px;
+    background-color: #8c8c8c;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 0;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #71b967;
+    border-radius: 5px;
+    background-color: #6c6c6c;
+    color: #71b967;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    background-color: #6c6c6c;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #71b967;
+    color: #b1f5a6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+#postsSection {
+    background-color: #8c8c8c;
+    color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #333;
+    color: #71b967;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
