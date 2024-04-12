@@ -17,5 +17,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages  # Change this to your deployment branch
-          FOLDER: _site  # Change this to your build output directory
+          BRANCH: main  # Change this to your deployment branch
+          FOLDER: public  # Change this to your build output directory
