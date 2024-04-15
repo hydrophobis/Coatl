@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background-color: #6c8390;
+    background-color: #426087;
     background-image: url(backgrounds/GG-hex.png);
     color: #ffffff;
     padding: 20px;
@@ -49,9 +49,9 @@ textarea {
     padding: 10px;
     margin: 5px 0 15px 0;
     border: 1px solid #67adb9;
-    border-radius: 5px;
+    border-radius: 20px;
     background-color: #414e6b;
-    color: #71b967;
+    color: #67adb9;
     box-sizing: border-box;
     font-size: 16px;
 }
@@ -76,13 +76,13 @@ button:hover {
     background-color: #414e6b;
 }
 
-#postsSection {
+#postSection {
     background-color: #748c9b;
     color: #000000;
     padding: 20px;
     border-radius: 10px;
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 

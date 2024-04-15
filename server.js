@@ -13,7 +13,7 @@ app.use(cors());
 
 // Allow requests only from a specific origin
 app.use(cors({
-    origin: 'https://cautious-fiesta-5gq5gp6p4rq9h76wj-8000.app.github.dev/'
+    origin: 'https://curly-space-orbit-r4gw4v9vrv5g3pg77.github.dev/'
 }));
 
 

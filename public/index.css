@@ -25,7 +25,7 @@ main {
 
 section {
     margin-bottom: 20px;
-    background-color: #8c8c8c;
+    background-color: #333;
     border-radius: 10px;
     padding: 20px;
     width: 100%;
@@ -49,7 +49,7 @@ textarea {
     padding: 10px;
     margin: 5px 0 15px 0;
     border: 1px solid #71b967;
-    border-radius: 5px;
+    border-radius: 20px;
     background-color: #6c6c6c;
     color: #71b967;
     box-sizing: border-box;
@@ -76,13 +76,13 @@ button:hover {
     background-color: #555;
 }
 
-#postsSection {
-    background-color: #8c8c8c;
+#postSection {
+    background-color: #333;
     color: #000000;
     padding: 20px;
     border-radius: 10px;
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
